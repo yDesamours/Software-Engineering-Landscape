@@ -1093,3 +1093,92 @@ public class TaskController {
 
 - Not ideal for very complex domains
 - Sometimes overkill for small apps
+
+### Layered Architecture example
+
+```
+com.mycompany.project
+│
+├── presentation # API layer (REST / GraphQL)
+│ ├── controller
+│ │ ├── ProjectController.java
+│ │ ├── TaskController.java
+│ │ └── MilestoneController.java
+│ │
+│ ├── dto
+│ │ ├── request
+│ │ │ ├── CreateProjectRequest.java
+│ │ │ ├── CreateTaskRequest.java
+│ │ │ └── UpdateTaskStatusRequest.java
+│ │ │
+│ │ └── response
+│ │ ├── ProjectResponse.java
+│ │ ├── TaskResponse.java
+│ │ └── MilestoneResponse.java
+│ │
+│ └── mapper
+│ ├── ProjectDtoMapper.java
+│ ├── TaskDtoMapper.java
+│ └── MilestoneDtoMapper.java
+│
+├── application # Use cases / orchestration
+│ ├── service
+│ │ ├── ProjectService.java
+│ │ ├── TaskService.java
+│ │ └── MilestoneService.java
+│ │
+│ └── exception
+│   └──ProjectCreationException.java
+│
+├── domain # Pure business logic
+│ ├── model
+│ │ ├── Project.java
+│ │ ├── Task.java
+│ │ └── Milestone.java
+│ │
+│ ├── valueobject
+│ │ ├── ProjectId.java
+│ │ ├── TaskStatus.java
+│ │ └── DueDate.java
+│ │
+│ ├── repository
+│ │ ├── ProjectRepository.java
+│ │ ├── TaskRepository.java
+│ │ └── MilestoneRepository.java
+│ │
+│ └── exception
+│ ├── DomainException.java
+│ ├── InvalidProjectStateException.java
+│ └── TaskAlreadyCompletedException.java
+│
+├── infrastructure # Technical details
+│ ├── persistence
+│ │ ├── entity
+│ │ │ ├── ProjectEntity.java
+│ │ │ ├── TaskEntity.java
+│ │ │ └── MilestoneEntity.java
+│ │ │
+│ │ ├── mapper
+│ │ │ ├── ProjectEntityMapper.java
+│ │ │ ├── TaskEntityMapper.java
+│ │ │ └── MilestoneEntityMapper.java
+│ │ │
+│ │ └── repository
+│ │ ├── ProjectRepositoryImpl.java
+│ │ ├── TaskRepositoryImpl.java
+│ │ └── MilestoneRepositoryImpl.java
+│ │
+│ ├── messaging
+│ │ └── ProjectEventPublisher.java
+│ │
+│ ├── cache
+│ │ └── ProjectCacheManager.java
+│ │
+│ └── httpclient
+│ └── CrmClient.java # talks to CRM module/service
+│
+└── util # Pure helpers (no business rules)
+├── DateUtils.java
+├── PaginationUtils.java
+└── ValidationUtils.java
+```
