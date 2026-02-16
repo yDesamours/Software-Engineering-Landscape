@@ -178,7 +178,7 @@ DDD provides several tactical patterns (building blocks) for implementing domain
 
 ### Common Mistake: Tactical Without Strategic
 
-Many developers learn DDD and only apply tactical patterns (entities, repositories) without strategic design. This leads to:
+Applying tactical patterns (entities, repositories) without strategic design leads to:
 
 - ❌ One giant model trying to serve everyone
 - ❌ "Customer" means 12 different things in different parts of the code
@@ -234,7 +234,7 @@ Each bounded context uses tactical patterns to implement its own domain model.
 
 ---
 
-Now let's explore each tactical pattern in detail, starting with Entities.
+Now let's explore each tactical pattern in detail, starting with Entitie
 
 ---
 
